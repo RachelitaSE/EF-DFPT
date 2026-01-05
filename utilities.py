@@ -54,11 +54,11 @@ def wrap_kpoint(k):
 
 
 def get_smooth(y, n_points=1000):
-    x = np.arange(len(y))
-    spline = make_interp_spline(x, y, k=3)
-    x_s = np.linspace(0, len(y) - 1, n_points)
-    y_s = spline(x_s)
-    return x_s, y_s
+    x_smooth = np.linspace(0, len(y) - 1, n_points)
+    spline = make_interp_spline(np.arange(len(y)), y, k=3)
+    y_smooth = spline(x_smooth)
+
+    return x_smooth, y_smooth
 
 
 def load_h5_data(path):
