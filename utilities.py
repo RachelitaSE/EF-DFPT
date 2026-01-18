@@ -78,3 +78,11 @@ def make_kpath(rk, hsp):
     kpath = [p2p(rk, hsp[i][1:], hsp[i + 1][1:]) for i in range(len(hsp) - 1)]
     kpath.append([0])
     return np.concatenate(kpath), kpath
+
+def load_overlap_data(path,occ,nv=4,nc=4,):
+        with h5py.File(path, "r") as f:
+            overlaps = {
+            "old_new": f["overlaps/old_new"][:, occ - nv:occ + nc, occ - nv:occ + nc],
+            "new_new": f["overlaps/new_new"][:, occ - nv:occ + nc, occ - nv:occ + nc],
+        }
+        return overlaps

@@ -15,7 +15,7 @@ colors = {
 data_cases = [
     {
         "label": "MoS₂ - EF corrections",
-        "data_dir": "/work/rachels/phd/MoS2/4-EF/u_overl_1/EF_data.h5",
+        "data_dir": "/work/rachels/phd/MoS2/36x36/4-EF/u_overl_1/EF_data.h5",
         "fermi": 0.8272,
         "hsp": [
             [r"$\Gamma$", 0, 0, 0],
@@ -30,7 +30,8 @@ data_cases = [
 
     {
         "label": "Pentacene - EF corrections",
-        "data_dir": "/work/rachels/phd/pentacene/original_struct/encut110/4-EF/EF_data.h5",
+        # "data_dir": "/work/rachels/phd/pentacene/original_struct/encut110/6-EF-tests/normalization/big_wfn/EF_data.h5",
+        "data_dir": "/work/rachels/phd/pentacene/original_struct/encut110/884/6-EF-tests/new_guy_script/EF_data.h5",
         "fermi": 2.328,
         "hsp": [
             [r"$\Gamma$", 0, 0, 0],
@@ -84,42 +85,43 @@ def main():
         plt.scatter(
             tick_positions,
             e02[hs_indices, b],
-            s=40, marker="o", facecolors="none",
+            s=60, marker="o", facecolors="none",
             edgecolors=cfg["colors"]["ef"],
             label="EF corrections" if first else None
         )
         plt.scatter(
             tick_positions,
             e02_adiab[hs_indices, b],
-            s=40, marker="x",
+            s=60, marker="x",
             c=cfg["colors"]["adiab"],
             label="adiabatic corrections" if first else None
         )
     # Decorations
     for t in tick_positions:
-        plt.axvline(t, color="grey", lw=0.5)
+        plt.axvline(t, color="grey", lw=0.7)
     plt.axhline(0, color="grey", ls="--", lw=1)
-    plt.xticks(tick_positions, labels, fontsize=16)
-    plt.ylabel(r"$E - E_f$ [eV]", fontsize=20)
+    plt.xticks(tick_positions, labels, fontsize=20)
+    plt.ylabel(r"$E - E_f$ [eV]", fontsize=22)
     plt.ylim(*cfg["ylim"])
-    plt.yticks(fontsize=16)
-    plt.legend(loc="upper right", fontsize=14)
-    plt.title(cfg["label"])
+    plt.yticks(fontsize=20)
+    plt.legend(loc="upper right", fontsize=16)
+    
     plt.tight_layout()
     plt.show()
-
+# ------------------------------------------------------------
+# RUN SECOND CASE- pentacene
     cfg = data_cases[1]
     rk, occ, e0, e2, e2_adiab = load_h5_data(cfg["data_dir"])
     print(f"{cfg['label']} — occupied states: {occ}")
     
     # Normalize energies
     vmax = np.max(e0[:, occ - 1])
-    e0 -= vmax - cfg["fermi"]
+    e0 -= vmax #- cfg["fermi"]
     e0 = e0[:,:152]
-    e02 = e0 + e2 - cfg["fermi"]
+    e02 = e0 + e2*(10**-3) #- cfg["fermi"] 
     e02 -= np.max(e02[:, occ - 1])
 
-    e02_adiab = e0 + e2_adiab - cfg["fermi"]
+    e02_adiab = e0 + e2_adiab #- cfg["fermi"]
     e02_adiab -= np.max(e02_adiab[:, occ - 1])
 
     # Build k-path
@@ -153,30 +155,27 @@ def main():
         plt.scatter(
             tick_positions,
             e02[hs_indices, b],
-            s=40, marker="o", facecolors="none",
+            s=60, marker="o", facecolors="none",
             edgecolors=cfg["colors"]["ef"],
             label="EF corrections" if first else None
         )
         plt.scatter(
             tick_positions,
             e02_adiab[hs_indices, b],
-            s=40, marker="x",
+            s=60, marker="x",
             c=cfg["colors"]["adiab"],
             label="adiabatic corrections" if first else None
         )
 
     # Decorations
     for t in tick_positions:
-        plt.axvline(t, color="grey", lw=0.5)
+        plt.axvline(t, color="grey", lw=0.7)
     plt.axhline(0, color="grey", ls="--", lw=1)
-
-    plt.xticks(tick_positions, labels, fontsize=16)
-    plt.ylabel(r"$E - E_f$ [eV]", fontsize=20)
+    plt.xticks(tick_positions, labels, fontsize=20)
+    plt.ylabel(r"$E - E_f$ [eV]", fontsize=22)
     plt.ylim(*cfg["ylim"])
-    plt.yticks(fontsize=16)
-
-    plt.legend(loc="upper right", fontsize=14)
-    plt.title(cfg["label"])
+    plt.yticks(fontsize=20)
+    plt.legend(loc="upper right", fontsize=16)
     plt.tight_layout()
     plt.show()
 
