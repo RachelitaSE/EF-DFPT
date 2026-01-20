@@ -9,7 +9,7 @@ fontsize = 18
 # =======================
 # Paths
 # =======================
-data_dir_Mos2 = '/work/rachels/phd/MoS2/36x36/6-EF-tests/test-broadening/lorentzian/D5/'
+data_dir_Mos2 = '/work/rachels/phd/MoS2/36x36/4-EF/lorentzian_normalized_d5/'
 data_dir_pen  = '/work/rachels/phd/pentacene/original_struct/encut110/884/4-EF/lorentzian20/'
 
 # =======================
