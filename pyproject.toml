@@ -1,0 +1,19 @@
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "ef-dfpt"
+version = "0.1.0"
+description = "Electron–phonon DFPT post-processing tools"
+authors = [{ name = "RachelitaSE" }]
+dependencies = [
+    "numpy",
+    "scipy",
+    "matplotlib",
+    "h5py",
+]
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
