@@ -75,7 +75,7 @@ cd EF-DFPT
 pip install -e .
 ```
 
-# Dependencies
+### Dependencies
 ```
 * Python ≥ 3.9
 * numpy
@@ -111,7 +111,7 @@ rk, occ, e0, e2, e2_adiab = load_h5_data("EF_data.h5")
 e0 = normalize_energies(e0, occ)
 
 ```
-# EF-DFPT HDF5 Output Structure
+## EF-DFPT HDF5 Output Structure
 
 This section describes the structure and physical meaning of the HDF5 files
 produced by the EF-DFPT code and consumed by the analysis tools in this repository.
