@@ -1,12 +1,12 @@
 [build-system]
-requires = ["setuptools>=61"]
+requires = ["setuptools>=64", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [project]
 name = "ef-dfpt"
 version = "0.1.0"
-description = "Electron–phonon DFPT post-processing tools"
-authors = [{ name = "RachelitaSE" }]
+description = "EF-DFPT analysis and post-processing tools"
+requires-python = ">=3.9"
 dependencies = [
     "numpy",
     "scipy",
@@ -16,4 +16,3 @@ dependencies = [
 
 [tool.setuptools.packages.find]
 where = ["src"]
-
