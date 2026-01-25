@@ -113,16 +113,22 @@ e0 = normalize_energies(e0, occ)
 ```
 # EF-DFPT HDF5 Output Structure
 
-Here we describe the structure and meaning of the HDF5 output files produced by the EF-DFPT code.
+This section describes the structure and physical meaning of the HDF5 files
+produced by the EF-DFPT code and consumed by the analysis tools in this repository.
 
-Outputs:
-* `EF_data.h5` — electron–phonon correction factors and energy shifts
-* `overlaps.h5` — overlap diagnostics between original and corrected wavefunctions
-Inputs include WFN.h5, eph.h5, and phonon mode files.
+The EF-DFPT workflow produces two primary output files relevant for post-processing:
 
-## 1. `EF_data.h5` — Electron–Phonon Corrections
+* `EF_data.h5` — electronic energies adiabatic energy corrections and EF-DFPT energy corrections
+* `overlaps.h5` — overlap matrices between unperturbed and EF-corrected wavefunctions
+⚠️ Important:
+This repository only reads and analyzes these files.
+It does not generate them.
 
-This file contains first- and second-order EF-DFPT quantities used to construct corrected energies and wavefunctions.
+## 1. `EF_data.h5` — Exact factorization Corrections
+
+`EF_data.h5` contains Kohn–Sham electronic structure data together with
+adiabatic and non-adiabatic electron–phonon corrections computed within
+the EF-DFPT formalism.
 ```
 EF_data.h5
 │
@@ -168,4 +174,30 @@ EF_data.h5
 | `e2_third_term`  | `(nq, nk, nbnd, nbnd)` | mixed two-phonon term    |
 | `e2_forth_term`  | `(nq, nk, nbnd)`       | diagonal DW term         |   
 
-## 1. `overlap.h5` — overlap calculation
+## 2. `overlaps.h5` — Wavefunction Overlap Diagnostics
+`overlaps.h5`` contains overlap matrices between unperturbed and
+EF-corrected wavefunctions, evaluated at each k-point.
+
+These overlaps are primarily used to:
+* diagnose band mixing
+* assess the validity of perturbative corrections
+* visualize coupling near the band gap
+### Structure
+```
+overlaps.h5
+│
+└── overlaps/
+    ├── old_new
+    │   Shape (full data): (nk, nbnd, nbnd)
+    │   Shape (demo data): (nk, nbnd_window, nbnd_window)
+    │   Type: complex128
+    │   Description: Overlap between unperturbed (old) and
+    │                EF-corrected (new) wavefunctions
+    │
+    └── new_new
+        │   Shape (full data): (nk, nbnd, nbnd)
+        │   Shape (demo data): (nk, nbnd_window, nbnd_window)
+        │   Type: complex128
+        │   Description: Overlap between EF-corrected wavefunctions
+
+```
