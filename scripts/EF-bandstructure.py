@@ -34,12 +34,17 @@ from ef_dfpt import (
     smooth_bands, 
     plot_bandstructure
 )
+from ef_dfpt.paths import get_data_dir
 import numpy as np
+
+
+
+DATA_DIR = get_data_dir()
 
 
 data_dir_Mos2 = {
     "label": "MoS₂ - EF corrections",
-    'data_path': '/work/rachels/phd/MoS2/36x36/4-EF/lorentzian_normalized_d5/EF_data.h5',
+    'data_path': DATA_DIR / "MoS2" / "EF_data.h5",
     'hsp': [
         [r"$\Gamma$", 0.0, 0.0, 0.0],
         [r"$\Lambda$", 1/6, 1/6, 0.0],
@@ -54,7 +59,7 @@ data_dir_Mos2 = {
 }
 data_dir_pen  = {
     "label": "Pentacene - EF corrections",
-    'data_path': '/work/rachels/phd/pentacene/original_struct/encut110/884/4-EF/lorentzian20/EF_data.h5',
+    'data_path': DATA_DIR / "pentacene" / "EF_data.h5",
     'hsp': [
         [r"$\Gamma$", 0.0, 0.0, 0.0],
         [r"$X$", 0.5, 0.0, 0.0],

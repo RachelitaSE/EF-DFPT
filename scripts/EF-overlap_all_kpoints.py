@@ -33,6 +33,7 @@ import matplotlib.pyplot as plt
 import matplotlib.colors as mcolors
 
 from ef_dfpt.io import load_h5_data, load_overlap_data
+from ef_dfpt.paths import get_data_dir
 
 fontsize = 18
 nv = 4
@@ -106,10 +107,10 @@ def plot_overlap_grid(data_dir: str, hsk: list, cmap: str):
     -----
     Preserves the original figure layout and shared colorbar positioning.
     """
-    rk, occ, *_ = load_h5_data(data_dir + "EF_data.h5")
+    rk, occ, *_ = load_h5_data(data_dir / "EF_data.h5")
     print(f"Number of occupied states: {occ}")
 
-    overlaps = load_overlap_data(data_dir + "overlaps.h5", occ=occ, nv=nv, nc=nc)
+    overlaps = load_overlap_data(data_dir / "overlaps.h5", occ=occ, nv=nv, nc=nc)
     overlap_old_new = overlaps["old_new"]
     overlap_new_new = overlaps["new_new"]
 
@@ -155,8 +156,9 @@ def main():
     """
     Run overlap-grid plots for MoS2 and Pentacene (same as original script).
     """
-    data_dir_Mos2 = "/work/rachels/phd/MoS2/36x36/6-EF-tests/test-broadening/lorentzian/D5/"
-    data_dir_pen = "/work/rachels/phd/pentacene/original_struct/encut110/884/4-EF/lorentzian20/"
+    DATA_DIR = get_data_dir()
+    data_dir_Mos2 = DATA_DIR / "MoS2"
+    data_dir_pen =  DATA_DIR / "pentacene" 
 
     hsk_Mos2 = [
         [r"$\Gamma$", 0.0, 0.0, 0.0],

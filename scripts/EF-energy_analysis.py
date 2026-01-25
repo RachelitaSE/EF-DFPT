@@ -36,6 +36,7 @@ import matplotlib.pyplot as plt
 
 from ef_dfpt.io import load_h5_data
 from ef_dfpt.energies import normalize_energies
+from ef_dfpt.paths import get_data_dir
 
 
 def find_k_index(rk: np.ndarray, k_target: np.ndarray) -> int:
@@ -68,12 +69,15 @@ def main():
 
     Preserves original plot styling and band truncation behavior.
     """
-    data_dir_mos2 = "/work/rachels/phd/MoS2/36x36/6-EF-tests/test-broadening/lorentzian/D5/"
-    data_dir_pen = "/work/rachels/phd/pentacene/original_struct/encut110/884/4-EF/lorentzian20/"
+    
+    DATA_DIR = get_data_dir()
+
+    data_dir_mos2 =  DATA_DIR / "MoS2"
+    data_dir_pen = DATA_DIR / "pentacene"
 
     # Load using package IO
-    rk_mos2, occ_mos2, e0_mos2, e2_mos2, e2_adiab_mos2 = load_h5_data(data_dir_mos2 + "EF_data.h5")
-    rk_pen, occ_pen, e0_pen, e2_pen, e2_adiab_pen = load_h5_data(data_dir_pen + "EF_data.h5")
+    rk_mos2, occ_mos2, e0_mos2, e2_mos2, e2_adiab_mos2 = load_h5_data(data_dir_mos2 / "EF_data.h5")
+    rk_pen, occ_pen, e0_pen, e2_pen, e2_adiab_pen = load_h5_data(data_dir_pen / "EF_data.h5")
 
     # Normalize to VBM = 0 (same logic as before)
     e0_mos2 = normalize_energies(e0_mos2, occ_mos2)

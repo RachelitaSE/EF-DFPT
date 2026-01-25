@@ -30,7 +30,7 @@ import matplotlib.pyplot as plt
 import matplotlib.colors as mcolors
 
 from ef_dfpt.io import load_h5_data, load_overlap_data
-
+from ef_dfpt.paths import get_data_dir
 
 fontsize = 18
 nv = 4
@@ -74,14 +74,15 @@ def plot_new_new_overlap(data_dir: str, k_target: np.ndarray, cmap: str):
     Matches original tick placement:
     - x/y ticks at VBM index (nv-1) and CBM index (nv).
     """
-    rk, occ, *_ = load_h5_data(data_dir + "EF_data.h5")
-    overlaps = load_overlap_data(data_dir + "overlaps.h5", occ=occ, nv=nv, nc=nc)
+    rk, occ, *_ = load_h5_data(data_dir / "EF_data.h5")
+    overlaps = load_overlap_data(data_dir / "overlaps.h5", occ=occ, nv=nv, nc=nc)
 
     idx = find_k_index(rk, k_target)
     overlap_new_new = overlaps["new_new"][idx]
-
-    vbm_idx = nv - 1
-    cbm_idx = nv
+    
+    nbnd = overlaps["new_new"].shape[1]
+    vbm_idx = nbnd // 2 - 1
+    cbm_idx = nbnd // 2
 
     fig, ax = plt.subplots(figsize=(5, 4))
     im = ax.imshow(
@@ -106,8 +107,10 @@ def main():
     """
     Produce overlap plots for Pentacene@C and MoS2@K (same as original script).
     """
-    data_dir_Mos2 = "/work/rachels/phd/MoS2/36x36/4-EF/lorentzian_normalized_d5/"
-    data_dir_pen = "/work/rachels/phd/pentacene/original_struct/encut110/884/4-EF/lorentzian20/"
+    
+    DATA_DIR = get_data_dir()
+    data_dir_Mos2 = DATA_DIR / "MoS2"
+    data_dir_pen =  DATA_DIR / "pentacene" 
 
     # =======================
     # High-symmetry points
